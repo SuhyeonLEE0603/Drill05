@@ -22,25 +22,37 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
 
-hand_points = [(randint(-640, 640), randint(-512, 512)) for i in range(10)]
+def draw_all(p1, p2):
+
+    global frame
+    x1, y1 = p1[0], p1[1]
+    x2, y2 = p2[0], p2[1]
+
+    for i in range(0, 100, 5):
+        clear_canvas()
+        tuk_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
+        frame = (frame + 1) % 8
+
+        t = i / 100
+        x = (1 - t) * x1 + t * x2   # 1 - t : t 의 비율로 x1, x2를 섞고 더한다
+        y = (1 - t) * y1 + t * y2
+        character.clip_draw(frame * 100, 0, 100, 100, x, y, 150, 150)
+        hand_arrow.draw(x2, y2)
+
+
+        handle_events()
+        if not running:
+            break
+
+        update_canvas()
+        delay(0.08 * t)
+
+hand_points = [(randint(0, 1280), randint(0, 1024)) for i in range(10)]
 
 while running:
-
-    clear_canvas()
-    tuk_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
-    
-    for px, py in hand_points:
-        hand_arrow.draw(px, py)
-
-    character.clip_draw(frame * 100, 0, 100, 100, x, y, 150, 150)
-    update_canvas()
+    for i in range(0, len(hand_points) - 1):
+        draw_all(hand_points[i], hand_points[i + 1])
 
     handle_events()
-    if not running:
-        break
-
-    frame = (frame + 1) % 8
-    delay(0.05)
-
 
 close_canvas()
