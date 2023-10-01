@@ -36,7 +36,10 @@ def draw_all(p1, p2):
         t = i / 100
         x = (1 - t) * x1 + t * x2   # 1 - t : t 의 비율로 x1, x2를 섞고 더한다
         y = (1 - t) * y1 + t * y2
-        character.clip_draw(frame * 100, 0, 100, 100, x, y, 150, 150)
+        if x1 < x2:
+            character.clip_draw(frame * 100, 100, 100, 100, x, y, 150, 150)
+        elif x2 < x1:
+            character.clip_draw(frame * 100, 0, 100, 100, x, y, 150, 150)
         hand_arrow.draw(x2, y2)
 
 
