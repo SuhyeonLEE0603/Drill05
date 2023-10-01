@@ -28,7 +28,7 @@ def draw_all(p1, p2):
     x1, y1 = p1[0], p1[1]
     x2, y2 = p2[0], p2[1]
 
-    for i in range(0, 100, 5):
+    for i in range(0, 100, 4):
         clear_canvas()
         tuk_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
         frame = (frame + 1) % 8
@@ -42,20 +42,16 @@ def draw_all(p1, p2):
             character.clip_draw(frame * 100, 0, 100, 100, x, y, 150, 150)
         hand_arrow.draw(x2, y2)
 
-
         handle_events()
         if not running:
             break
 
         update_canvas()
-        delay(0.08 * t)
+        delay(0.05 * t)
 
-hand_points = [(randint(0, 1280), randint(0, 1024)) for i in range(10)]
+hand_points = [(randint(0, 1280), randint(0, 1024)) for i in range(20)]
 
-while running:
-    for i in range(0, len(hand_points) - 1):
-        draw_all(hand_points[i], hand_points[i + 1])
-
-    handle_events()
+for i in range(0, len(hand_points) - 1):
+    draw_all(hand_points[i], hand_points[i + 1])
 
 close_canvas()
